@@ -1,27 +1,35 @@
-# Model scope
+# Scope of the revised study
 
-## Prescribed anchor zones
+## Network and demand
 
-The final testbed constructs three synthetic regions from transformed copies of the selected SMART-DS-derived network. Each region receives a prescribed DC overlay and a prescribed set of eligible load blocks. The construction ranks loads by distance and load, then applies the original zone-load selection limits. These sets define the assumed electrically enabled support zones; they are not recomputed through an intertie optimization at each repair decision.
+The synthetic testbed contains 7,114 nodes, 7,215 edges, 4,179 community-load records, three regional modules and 27 feeders. A feeder-level largest-load ranking assigns 204 critical records to 201 nodes, representing approximately 248 MW of 537.6 MW baseline community demand. This is a synthetic critical-service overlay, not a utility inventory.
 
-Support is allocated to interrupted loads in those zones, using deterministic critical-first allocation with a fixed within-class priority (`critical_first_fixed_priority`). The fixed priority uses legacy compatibility fields, not the duration-dependent repair objective; see [controller provenance](provenance/controller_trace.md). Loads outside the zones remain ineligible. Connected loads do not consume anchor support. Grid restoration and temporary support both affect the reported service trajectory.
+Adequacy and chronological assessments use the native 35,040 quarter-hour profile (approximately 461.36 MW peak and 313.45 MW mean). Fixed-repair hurricane assessments use baseline load. DC demand is separate.
 
-## Power and energy
+## Supply adequacy
 
-The constructed anchor export ratings are 4, 5 and 6 MW, for a **15 MW aggregate cap**. The reported controller pools the ratings for allocation across eligible loads. It enforces the aggregate bound rather than separate intertie-flow constraints at each site. The original allocation order and partial-load treatment are preserved.
+An IEEE RTS 32-unit fleet is scaled by native community peak and the fixed 1.25 planning factor. Zero to five independently available U100-equivalent units add 0–101.17 MW. No-DC and DC cases receive identical supply at each level. Critical community demand is served first; remaining capacity is shared proportionally between noncritical community demand and DC utility requests.
 
-The no-anchor case has no support. The power-only reference uses the aggregate power limit without cumulative-energy depletion. E12 and E24 set initial export-energy budgets to 12 and 24 hours at the aggregate export rating: 180 and 360 MWh for the reported portfolio. Support consumes energy over each repair interval, including partial-interval depletion. After depletion, finite-energy support is zero.
+Private backup serves internal shortfalls without reducing the utility demand request. Coordinated self-supply and export are disabled. EENS and shortfall hours are exact stationary expectations under independent unit outages. Dividing shortfall hours by 24 does not give daily LOLE.
 
-DC construction tables also carry UPS, backup generation, facility-load and survival metadata. The final export sensitivities use the resource configuration's operative power and energy rules; the ancillary DC metadata are not additional independently dispatched supplies or alternative energy budgets in the reported controller.
+## Emergency support
 
-## Network and damage representation
+Three nonoverlapping eligible load sets receive support through separate 5 MW site limits. Each site has 13 × 2.725 MW generators, 1,440 MWh electrical-equivalent fuel and an IT-only 20 MW / 3.333 MWh UPS. Operating/design demands are 26/30 MW. Export reserves full internal-demand generation headroom plus one contingency unit and follows critical-first allocation after a 15-minute authorization delay.
 
-Restoration is a connectivity-and-repair model with component-specific repair durations. Supply requires connectivity to the synthetic source, except for prescribed eligible anchor support. The network contains benchmark-derived distribution assets and synthetic/equivalent source and connection edges.
+The retained floor is constant in time. A 44-hour design-load reserve retains 1,320 MWh/site, leaving 120 MWh initially exportable. Internal backup can use retained fuel. No fuel deliveries occur during hurricane restoration. Reserve hours differ from the old E12/E24 dedicated export budgets.
 
-The original hurricane module includes wind exposure and fragility for overhead-distribution proxies, transmission lines and substations, with equivalent source and schematic DC connections excluded. Its default configuration disables underground, transformer and switch damage where that legacy fragility model is absent.
+## Recovery and internal service
 
-The final benchmark sampler separately selects repairable hurricane-eligible benchmark edges, including overhead-line, transformer and switch classes, using the copied spatial, component and length weights. Repair times use the existing bounded stochastic rule. This sampler and its scenario parameters are preserved in `testbed/benchmark.py` and `configs/testbed/benchmark.yaml`. Historical-source labels, track/intensity augmentation and stress cases remain separate categories.
+The primary 131-scenario comparison holds archived GraphRL-A2C repair orders and durations fixed. DC utility supply remains available. Export changes service before reconnection, not repair timing. Continuous emergency-call equipment histories are paired between configurations; inherited bundled-link connectivity is retained.
 
-## Electrical support-path assumptions
+The separate 960-pair chronological check includes supply outages, dispatch-dependent generator exposure, UPS recharge and persistent resource states through the year. A 168-hour warmup precedes 8,760 reporting hours; the hurricane starts halfway through reporting. Export pauses without full internal utility service. Post-restoration outcomes are included in full-year outcomes. Interruption frequencies are conditional on the evaluated sample and operating assumptions.
 
-The prescribed zones assume that suitable electrically enabled and islandable support paths and operating arrangements exist and remain available during the event. The DC assets, prescribed support paths and abstract source/backbone links are excluded from the final benchmark damage set. The model does not design detailed intertie power flow, AC voltage/reactive-power operation, protection coordination, synchronization, line thermal constraints, or site-specific reverse-power controls. Enablement cost and community-incidence calculations operate on the stated restoration abstraction and source-based accounting inputs.
+The SI support-responsive comparison uses the same frozen policy at both demands, equipment history zero and zero reserve. It observes current support, not future equipment transitions.
+
+## Economics and boundaries
+
+Economics values export enablement from the same connected portfolio. Load-level damage is calculated before averaging. Illustrative reference inputs are $1 million capital, $25,000/year fixed costs, $300/MWh export costs, 20 years, 3.1% real discount and a 10-year representative event interval. The interval is not an estimated hurricane return period.
+
+Routine DC construction/operation, taxes, jobs and host-community fiscal balances are outside this comparison. Emissions damages, replacements and salvage are unpriced. Old calculations remain in [legacy scope](legacy_model_scope.md).
+
+Support paths and source connections are assumed available except in explicit connection-removal tests. The framework does not resolve AC power flow, protection design, switching, crew travel, cooling-related IT shutdown or weather-correlated upstream outages. Hurricane-track labels identify synthetic damage provenance, not observed utility interruptions.

@@ -1,0 +1,42 @@
+{
+  "status": "illustrative_incremental_export_assessment_for_revised_manuscript",
+  "scenario_subset": "benchmark_hard_historical_nonzero",
+  "demand_case": "nominal",
+  "equipment_replicate": 0,
+  "baseline_treatment": "private_no_export",
+  "support_treatment": "reserve_44h",
+  "price_year": 2025,
+  "critical_planning_value_usd_per_kwh": 100.0,
+  "valuation_multipliers": [
+    0.5,
+    1.0,
+    1.5
+  ],
+  "years": 20,
+  "real_discount_rate": 0.031,
+  "export_resource_cost_usd_per_mwh": 300.0,
+  "annual_incremental_fixed_cost_usd": 25000.0,
+  "event_intervals_years": [
+    1,
+    2,
+    5,
+    10,
+    20,
+    50
+  ],
+  "illustrative_capital_usd": 1000000.0,
+  "illustrative_interval_years": 10.0,
+  "npv_map_capital_max_usd": 5000000.0,
+  "cost_status": "Round analyst-selected display assumptions, not procurement estimates or calibrated generator costs",
+  "frequency_status": "Sensitivity coordinates; not estimated hurricane return periods",
+  "valuation_status": "Inherited load-level sector/duration model; 0.5x and 1.5x are analyst sensitivities, not confidence limits",
+  "boundary": "Incremental economic value of export from the same connected DC portfolio; community avoided damage less export-enablement resources",
+  "not_included": [
+    "DC construction and ordinary operation, common to both cases",
+    "ordinary adequacy burden and upstream capacity costs, common to both export cases",
+    "tax receipts, tax incentives, jobs, or compensation transfers",
+    "incremental emissions damages; require updated generator/emission assumptions",
+    "equipment replacements, salvage, or cost escalation"
+  ],
+  "event_repeat_assumption": "Stationary representative-event mean with full readiness restored between events; no overlapping events or inter-event resource carryover"
+}

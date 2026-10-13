@@ -1,3 +1,5 @@
+> This record describes the earlier release. For the revised application study, see [current reproduction](../reproduction.md) and [revision validation](../revision_validation.md).
+
 # Publication refinements and manual review
 
 Intended repository: `graphrl-data-center-restoration`. Software title: **GraphRL for Data-Center-Supported Distribution Restoration**. The on-disk folder name is retained so the isolated review location and provenance remain stable. The import package remains `dc_restoration`.

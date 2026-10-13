@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "graphrl-data-center-restoration"
-version = "0.1.0"
-description = "Research code for graph reinforcement learning and prescribed, power- and energy-constrained data-center support in sequential distribution-system restoration under hurricane-inspired disruptions, with resilience and benefit-cost evaluation."
+version = "0.2.0"
+description = "Research code for community supply adequacy, hurricane recovery, data-center emergency support, internal-service protection, and incremental export-enablement economics."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
@@ -14,16 +14,22 @@ dependencies = [
   "matplotlib", "pyarrow", "requests", "shapely", "openpyxl", "dss-python",
 ]
 
+[project.urls]
+Repository = "https://github.com/kamiarkhayam/data-center-reliability-resilience"
+Issues = "https://github.com/kamiarkhayam/data-center-reliability-resilience/issues"
+
 [project.optional-dependencies]
 dev = ["pytest", "ruff", "build"]
 mapping = ["geopandas>=1.1.3,<2", "pyproj>=3.6,<4", "pyogrio>=0.7.2,<1"]
 
 [project.scripts]
+dc-revision = "dc_restoration.revision.workflows:main"
 dc-fetch-intro-map-sources = "dc_restoration.spatial.cli:fetch_main"
 dc-prepare-intro-map = "dc_restoration.spatial.cli:prepare_main"
 dc-generate-intro-map = "dc_restoration.spatial.cli:generate_main"
 
 [tool.setuptools.package-data]
+"dc_restoration.revision" = ["resources/*.json", "resources/*.csv"]
 "dc_restoration.spatial" = ["intro_map.yaml", "source_manifest.json"]
 
 [tool.setuptools.packages.find]

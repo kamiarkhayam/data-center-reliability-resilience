@@ -23,6 +23,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
+      - name: Check code-only release contents
+        run: python scripts/check_release_contents.py
       - name: Install verified staging dependencies and package
         run: |
           python -m pip install -r requirements-lock.txt

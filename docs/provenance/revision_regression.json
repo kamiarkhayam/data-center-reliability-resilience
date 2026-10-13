@@ -1,0 +1,13 @@
+{
+  "fixed_repair_scenarios_checked": 131,
+  "equipment_histories_per_scenario_checked": 1,
+  "paired_chronological_years_checked": 1,
+  "max_hurricane_absolute_difference": 0.0,
+  "max_chronology_absolute_difference": 0,
+  "economic_accounting_matches_archive": true,
+  "adequacy_18_matched_comparisons": 18,
+  "scope": "Packaging regression; original production archives unchanged. Not a rerun of all equipment histories.",
+  "responsive_scenarios_checked": 1,
+  "responsive_demand_cases_checked": 2,
+  "responsive_repair_hashes_match": true
+}

@@ -1,3 +1,5 @@
+> This record describes the earlier release. For the revised application study, see [current reproduction](../reproduction.md) and [revision validation](../revision_validation.md).
+
 # Publication-package validation
 
 This curated research-software release derives from the authoritative archive. Intentional accounting corrections are documented in [release refinements](release_refinements.md); it is not represented as purely formatting or import work. No Git repository, commit, remote or publication action was created.

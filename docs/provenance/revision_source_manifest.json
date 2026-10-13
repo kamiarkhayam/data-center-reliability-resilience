@@ -1,0 +1,152 @@
+[
+  {
+    "source": "research/reliability_pilot_v1/adequacy.py",
+    "source_sha256": "ee0b94121e7007ccec468a204d4786da32a187886c1ea4db56e635ed4abc4e81",
+    "release_file": "src/dc_restoration/revision/supply.py",
+    "adaptation": "Selected numerical functions unchanged; unused pilot workflows omitted."
+  },
+  {
+    "source": "research/reliability_pilot_v2/planning.py",
+    "source_sha256": "0305056173d48592463cdcbe574f27f9040e914abdfc03e765f9eb7790da3c6d",
+    "release_file": "src/dc_restoration/revision/supply_traces.py",
+    "adaptation": "Namespaced import only; random stream identities unchanged."
+  },
+  {
+    "source": "research/reliability_pilot_v1/audit.py",
+    "source_sha256": "b200c91a363c8c37d9070738d94459d45e3464304c8308047bda6ef2a37c349e",
+    "release_file": "src/dc_restoration/revision/design.py",
+    "adaptation": "Selected sizing function unchanged."
+  },
+  {
+    "source": "research/reliability_pilot_v5/service.py",
+    "source_sha256": "b0edf54e3f9a438954f3d7ff95386a88caad1da9939d01ea656c9c107590c355",
+    "release_file": "src/dc_restoration/revision/service.py",
+    "adaptation": "Unchanged finite fuel, UPS and internal-service ledger. Historical time-dependent export mode is unused by current workflows."
+  },
+  {
+    "source": "research/reliability_pilot_v5/scenarios.py",
+    "source_sha256": "149b3e9cd8dabb4e85b6b83e7006630ccc1af2bc29a5dd311487abf489bc3dff",
+    "release_file": "src/dc_restoration/revision/equipment.py",
+    "adaptation": "Selected equipment functions unchanged; imports namespaced."
+  },
+  {
+    "source": "research/hurricane_analysis_v1/grid_service.py",
+    "source_sha256": "51601c65e58e8516c8ac961dbfc25cc5d7fef83414dfef77e63a3449b188bf5b",
+    "release_file": "src/dc_restoration/revision/export.py",
+    "adaptation": "Namespaced imports replace sibling-pilot sys.path mutation; numerical controls unchanged."
+  },
+  {
+    "source": "research/annual_risk_analysis_v1/internal_service.py",
+    "source_sha256": "94ddff6c57f9a05464ca3b665ab58b9fc30e8baa7a0ba87e726729fa28ace961",
+    "release_file": "src/dc_restoration/revision/internal_service.py",
+    "adaptation": "Namespaced imports only."
+  },
+  {
+    "source": "research/annual_risk_analysis_v1/annual_service.py",
+    "source_sha256": "44d03871dd096b0db925703bfe095a2e4e3c6353ecd546960c9b9a1334134d0b",
+    "release_file": "src/dc_restoration/revision/chronology.py",
+    "adaptation": "Namespaced imports only; dispatch-dependent equipment exposure and year-long resource continuity unchanged."
+  },
+  {
+    "source": "research/hurricane_analysis_v1/inputs.py",
+    "source_sha256": "64fad5f5ec7db015ebf384e7e55fcbdea85126b7e80482c709b143a522322283",
+    "release_file": "src/dc_restoration/revision/network.py",
+    "adaptation": "Explicit case path replaces workspace root. Network, support allocation and bundled-link logic unchanged."
+  },
+  {
+    "source": "research/hurricane_analysis_v1/settings.py",
+    "source_sha256": "24dde2b0919e23500be09bbcae18b3729c613e80b973b3ca45b63a72c0a8bed4",
+    "release_file": "src/dc_restoration/revision/settings.py",
+    "adaptation": "Package resources replace historical file dependencies; hurricane and chronological validators retained."
+  },
+  {
+    "source": "research/annual_risk_analysis_v1/settings.py",
+    "source_sha256": "473425ba1929743f988ba2aff3ed9770004e2a62e79fac748d1543ecda8b5faa",
+    "release_file": "src/dc_restoration/revision/settings.py",
+    "adaptation": "Package resources replace historical file dependencies; hurricane and chronological validators retained."
+  },
+  {
+    "source": "research/hurricane_analysis_v1/simulation.py",
+    "source_sha256": "c9ae091a149d41b512b0da4ae91b6089a6cc4d0f06379ec3753caeaab0e9fffe",
+    "release_file": "src/dc_restoration/revision/recovery.py",
+    "adaptation": "Explicit installed capacities supplied by caller instead of old pilot files; replay algorithm unchanged."
+  },
+  {
+    "source": "research/annual_risk_analysis_v1/context.py",
+    "source_sha256": "1f10596d623229c0ee299cd6468ef6b58dc3e39c8898e54fb5fa750d52bccdb4",
+    "release_file": "src/dc_restoration/revision/storm.py",
+    "adaptation": "Storm model unchanged; context supplied explicitly by portable runner."
+  },
+  {
+    "source": "research/hurricane_analysis_v1/campaign.py",
+    "source_sha256": "7dc9adbaacffebff43d28f970fa12f97f63cc7397d1705425df070274cf601ec",
+    "release_file": "src/dc_restoration/revision/checks.py",
+    "adaptation": "Selected validation functions unchanged."
+  },
+  {
+    "source": "research/economic_figure_examples_v1/build_examples.py",
+    "source_sha256": "8b4426971d7abd4186667d07f23e09b09a11f069b89318ef7742bada286771e6",
+    "release_file": "src/dc_restoration/revision/economics.py",
+    "adaptation": "Selected valuation and investment routines unchanged; new CLI accepts explicit input paths."
+  },
+  {
+    "source": "research/reliability_pilot_v1/config.json",
+    "source_sha256": "077de5f55cc83cabf1f61a8a43eb2cf9cdc652d030089e472f43e025f66460ef",
+    "release_file": "src/dc_restoration/revision/resources/facility.json",
+    "adaptation": "Retained operative hardware and service fields; removed historical filesystem paths."
+  },
+  {
+    "source": "research/reliability_pilot_v5/config.json",
+    "source_sha256": "a5d1ef1f422dffe6f2e22758eb34cadb3d24f0346e6fd97079be615b6dcb901b",
+    "release_file": "src/dc_restoration/revision/resources/facility.json",
+    "adaptation": "Retained operative hardware and service fields; removed historical filesystem paths."
+  },
+  {
+    "source": "research/hurricane_analysis_v1/config.json",
+    "source_sha256": "82c2b46f1f41587ab75c0b6cf129b25ed6ccf1b30fb4a0511518a695ad6345a3",
+    "release_file": "src/dc_restoration/revision/resources/hurricane.json",
+    "adaptation": "Use production seed, namespace and 131-case bank; reference reserve 44 h; explicit input contract."
+  },
+  {
+    "source": "research/hurricane_analysis_v1/protocol.json",
+    "source_sha256": "29bb175ea98e744a208550ec4958633d13277acf785f739bfc4e6155a2616912",
+    "release_file": "src/dc_restoration/revision/resources/hurricane.json",
+    "adaptation": "Use production seed, namespace and 131-case bank; reference reserve 44 h; explicit input contract."
+  },
+  {
+    "source": "research/hurricane_analysis_v1/protocol.json",
+    "source_sha256": "29bb175ea98e744a208550ec4958633d13277acf785f739bfc4e6155a2616912",
+    "release_file": "src/dc_restoration/revision/resources/hurricane_protocol.json",
+    "adaptation": "Production assumptions retained; economic status label updated to current manuscript use."
+  },
+  {
+    "source": "research/annual_risk_analysis_v1/protocol.json",
+    "source_sha256": "a9650996759a3f34fe4712150d81ecbd82ddf967d0bd5d68f783198dfab9826a",
+    "release_file": "src/dc_restoration/revision/resources/chronology_protocol.json",
+    "adaptation": "Production assumptions retained; economic status label updated to current manuscript use."
+  },
+  {
+    "source": "research/results_report_variants_v1/outputs/final_selected_with_economics_v1/economics/assumptions.json",
+    "source_sha256": "0677d9a3cc168ca6d1a9f446198ccda189671d150bb2fce7f04524bd788c8dee",
+    "release_file": "src/dc_restoration/revision/resources/economics.json",
+    "adaptation": "Production assumptions retained; economic status label updated to current manuscript use."
+  },
+  {
+    "source": "research/reliability_pilot_v1/rts_fleet.csv",
+    "source_sha256": "1a561d559a2718d8f27318e6b4f75f20383a1946e7fe69c53db5ed34310ea705",
+    "release_file": "src/dc_restoration/revision/resources/rts_fleet.csv",
+    "adaptation": "Unchanged source fleet."
+  },
+  {
+    "source": "research/hurricane_analysis_v1/adaptive.py",
+    "source_sha256": "6c35928db1a031f67c499470f84f36886599f6e61d36183c992bac4330d7d2ff",
+    "release_file": "src/dc_restoration/revision/responsive.py",
+    "adaptation": "Namespaced packaged policy/evaluation modules and explicit checkpoint/config arguments replace archived workspace imports. Support preview and inference logic retained."
+  },
+  {
+    "source": "research/hurricane_analysis_v1/preview.py",
+    "source_sha256": "7645f8b5f4b4aabc21d51b85ed6eadbc33907c2fce855f597ed8cba9c4ccb477",
+    "release_file": "src/dc_restoration/revision/preview.py",
+    "adaptation": "Namespaced packaged policy/evaluation modules and explicit checkpoint/config arguments replace archived workspace imports. Support preview and inference logic retained."
+  }
+]

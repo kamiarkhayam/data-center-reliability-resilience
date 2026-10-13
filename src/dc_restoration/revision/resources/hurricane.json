@@ -1,0 +1,19 @@
+{
+  "seed": 20260914,
+  "equipment_namespace": 91,
+  "cohort_size": 131,
+  "candidate_k": 50,
+  "demand_case": "nominal",
+  "operating_condition": "grid_supplied_dc_separate_generator_support_connection",
+  "upstream_condition": "planned_supply_available_no_new_upstream_storm_failure",
+  "export_rule": "shared_finite_fuel_with_backup_power_headroom",
+  "full_standby_reserve_control": true,
+  "automatic_refueling": false,
+  "automatic_ups_recharge": false,
+  "fixed_policy": "TRUE_GNN Harmonized A2C",
+  "fixed_order_resource": "R0_no_dc_anchor",
+  "paths": {
+    "case": "data/external/revision/case"
+  },
+  "reserve_hours": 44
+}

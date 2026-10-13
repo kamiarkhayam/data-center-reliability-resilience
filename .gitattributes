@@ -6,6 +6,8 @@
 *.yml text eol=lf
 *.cff text eol=lf
 *.csv text eol=lf
+*.json text eol=lf
+*.tex text eol=lf
 *.txt text eol=lf
 LICENSE text eol=lf
 .gitignore text eol=lf

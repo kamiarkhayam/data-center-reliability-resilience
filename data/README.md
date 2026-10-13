@@ -1,5 +1,10 @@
 # External data contract
 
+The revised reliability/resilience assessment uses `data/external/revision`.
+Its complete file contract and preparation command are in
+[current reproduction](../docs/reproduction.md). The directories below retain
+the earlier benchmark-building, policy-training and fiscal-analysis contracts.
+
 Only this document is distributed under `data/`. The tiny test fixture is separately located under `tests/fixtures/tiny_case/` and is wholly invented.
 
 Obtain source data from the original providers under their applicable terms. Public download access does not establish redistribution permission. This repository does not redistribute SMART-DS, Texas7k, NOAA inputs, economic source documents, or derived research bundles. Confirm redistribution rights before creating a public data archive. No data license is assigned by this software release.

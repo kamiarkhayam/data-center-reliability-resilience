@@ -1,0 +1,37 @@
+{
+  "seed": 20260915,
+  "stream_stage": 90,
+  "replicates_per_scenario": 32,
+  "scenario_group": "benchmark_hard_historical_nonzero",
+  "reserve_hours": [
+    0,
+    44,
+    46,
+    48
+  ],
+  "demand_cases": [
+    "nominal",
+    "design"
+  ],
+  "controls": [
+    "private_backup",
+    "private_plus_coordinated"
+  ],
+  "event_intervals_years": [
+    1,
+    2,
+    5,
+    10,
+    20,
+    50
+  ],
+  "illustrative_interval_years": 10,
+  "warmup_hours": 168,
+  "event_elapsed_hours": 4380,
+  "step_hours": 0.25,
+  "post_event_refuel_hours": 48,
+  "bootstrap_replicates": 4000,
+  "bootstrap_seed": 2026091590,
+  "equipment_failures": true,
+  "refuel_enabled": true
+}

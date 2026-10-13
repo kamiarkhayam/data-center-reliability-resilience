@@ -10,6 +10,7 @@
 /checkpoints/
 /figures/
 /logs/
+/paper/
 *.pt
 *.pth
 *.ckpt

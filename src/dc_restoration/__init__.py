@@ -1,3 +1,3 @@
-"""Methods for restoration with prescribed data-center support anchors."""
+"""Reliability and resilience of data-center demand and emergency support."""
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

@@ -1,9 +1,10 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite this software record."
-title: "GraphRL for Data-Center-Supported Distribution Restoration"
+title: "Reliability and Resilience Implications of Data-Center Demand and Emergency Support in Distribution Systems"
 type: software
-version: 0.1.0
+version: 0.2.0
 license: MIT
+repository-code: "https://github.com/kamiarkhayam/data-center-reliability-resilience"
 authors:
   - family-names: Khayambashi
     given-names: Kamiar
@@ -12,4 +13,14 @@ authors:
     given-names: Negin
     affiliation: University of Virginia
 abstract: >-
-  Research code for graph reinforcement learning and prescribed, power- and energy-constrained data-center support in sequential distribution-system restoration under hurricane-inspired disruptions, with resilience and benefit-cost evaluation.
+  Research code for community supply adequacy, hurricane recovery, data-center emergency support, internal-service protection, and incremental export-enablement economics.
+  GraphRL-A2C provides frozen repair sequences, with policy comparisons retained
+  as supporting evidence. The assessment uses a benchmark-derived synthetic
+  distribution testbed and prescribed emergency-support connections.
+keywords:
+  - Data centers
+  - Power distribution systems
+  - Supply adequacy
+  - Disaster resilience
+  - Emergency support
+  - Hurricane recovery

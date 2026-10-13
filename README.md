@@ -1,130 +1,90 @@
-# GraphRL for Data-Center-Supported Distribution Restoration
+# Reliability and Resilience Implications of Data-Center Demand and Emergency Support in Distribution Systems
 
-Research code for graph reinforcement learning and prescribed, power- and energy-constrained data-center support in sequential distribution-system restoration under hurricane-inspired disruptions, with resilience and benefit-cost evaluation.
+Research software by **Kamiar Khayambashi and Negin Alemazkoor**, University of Virginia.
 
-The study uses a benchmark-derived synthetic multi-region distribution-system testbed constructed from transformed SMART-DS/OpenDSS feeder modules and synthetic source/backbone interfaces. It is an experimental restoration environment and does not represent a specific utility territory.
+This repository implements an assessment of how data-center demand and emergency backup export affect distribution-system reliability and hurricane recovery. It combines supply adequacy, equipment and fuel constraints, chronological internal-service simulation, and incremental export-enablement economics in a benchmark-derived synthetic testbed.
 
-Intended GitHub repository name: `graphrl-data-center-restoration`. This curated research-software release is staged for manual review. No research data, trained weights, frozen paper results, or manuscripts are bundled. The quick start validates software behavior; it does not reproduce paper numbers.
+**This is a code-only release.** It contains implementation, model configurations, source provenance, and invented test fixtures. Research result tables, result figures, manuscript files, and highlights are excluded. Full study inputs and trained weights are supplied separately; this repository alone does not reproduce the complete paper.
 
-## Reported methods
+## Assessment workflows
 
-| Method | Implementation |
-|---|---|
-| GraphRL-A2C | Edge-informed graph message passing; lookahead behavior cloning followed by greedy-relative A2C |
-| GraphRL-PPO | The same graph architecture and source-based objective, followed by PPO |
-| GraphBC | Graph policy trained using lookahead behavior-cloning targets |
-| MLP-A2C | Candidate-feature MLP, behavior-cloning initialization and A2C |
-| CNN-A2C | Spatial raster encoder with candidate features, behavior-cloning initialization and A2C |
-| Greedy | Selects the leading candidate under the source-based economic damage screen |
-| Random Top-K | Samples uniformly from valid screened candidates |
-| Bounded GA | Fixed-budget search over repair orders, initialized with a Greedy order |
+| Workflow | Comparison | Implementation |
+|---|---|---|
+| Supply adequacy | Community supply with 0, 78, or 90 MW of data-center demand at matched supply capacity | Stationary generation-capacity distribution integrated over annual demand |
+| Hurricane support | Community export disabled or enabled with identical physical repair sequences | Paired equipment histories, site export limits, and retained fuel reserves |
+| Internal service | Internal IT and auxiliary service with export disabled or enabled | Chronological supply outages, generator operation, fuel, UPS, and hurricane recovery |
+| Economics | Incremental participation in community export | Load-level interruption valuation, annualization, and investment sensitivity |
 
-The matched encoder comparison uses K = 50 candidates and a 32,768-step A2C budget. The shared anchor controller uses deterministic critical-first allocation with a fixed within-class priority. The `critical_first_fixed_priority` compatibility mode preserves archived trajectories. Its legacy priority fields are distinct from the source-based repair objective. See [methods](docs/methods.md) and [model scope](docs/model_scope.md).
+GraphRL-A2C supplies frozen repair sequences for the primary hurricane comparison. Optional support-responsive replay and earlier policy benchmarks are documented separately. Annual adequacy and event-conditioned hurricane interruption use different accounting periods and are not directly added.
 
-## Installation
+## Quick start: validate the software
 
-Use Python 3.11 or newer. The staging lock and CI target Windows with Python 3.13. Other platforms should resolve the dependencies from `pyproject.toml`; they have not been validated by this packaging task.
+Use Python 3.11 or newer. Windows with Python 3.13 is the CI-tested platform.
 
 ```sh
+git clone https://github.com/kamiarkhayam/data-center-reliability-resilience.git
+cd data-center-reliability-resilience
 python -m venv .venv
 ```
 
-Activate `.venv` using `.venv\Scripts\Activate.ps1` in PowerShell or `source .venv/bin/activate` in a POSIX shell. On the validated platform:
+Activate the environment with `.venv\Scripts\Activate.ps1` in PowerShell or `source .venv/bin/activate` in a POSIX shell, then run:
 
 ```sh
-python -m pip install -r requirements-lock.txt
-python -m pip install --no-build-isolation --no-deps -e ".[dev]"
-```
-
-For a separately resolved environment, use `python -m pip install -e ".[dev]"`. The runtime includes PyTorch, NumPy, pandas, SciPy, NetworkX, Matplotlib, PyYAML, PyArrow, Requests, Shapely, OpenPyXL and DSS-Python. The dev group adds pytest and Ruff. The lock records the isolated staging environment, not the original training environment. Neural research runs used CUDA; tiny checks run on CPU.
-
-## Quick start
-
-Run from this folder:
-
-```sh
+python -m pip install -e ".[dev]"
+python scripts/check_release_contents.py
 python scripts/validate_installation.py
-python -m pytest
+python -m pytest --basetemp=.runtime/pytest
+python scripts/run_revision.py --help
 ```
 
-Validation imports every package module and performs a short deterministic rollout on six invented nodes. Tests exercise connectivity, repair validity, candidate masks, support caps and energy depletion, economic units, and policy interfaces. No external download, training, scenario generation, GA, or paper evaluation is part of this quick start.
+These checks use invented cases and do not require research inputs or reproduce paper results. They exercise allocation, generator headroom, fuel reserves, internal backup, chronological accounting, economics, and policy interfaces.
 
-## External inputs and configuration
+For the pinned Windows CI environment, install `requirements-lock.txt` before the editable package. Other platforms resolve dependencies from `pyproject.toml`. Optional map preparation also requires the `mapping` extra.
 
-Supply your authorized inputs under `data/external/`, or configure other paths. [data/README.md](data/README.md) specifies the network, damage, manifest, training-state and accounting schemas. SMART-DS, NOAA-derived tracks and other source datasets are not redistributed here; confirm their terms directly with their providers.
+## Run the study workflows with your input bundle
 
-`configs/testbed/`, `hazards/`, `restoration/`, `policies/`, `evaluation/` and `economics/` contain named destination copies of the relevant configurations. The shared learning protocol is `configs/policies/training.yaml`. Method-specific files reference it. Paths resolve from the repository root; use `--root` or `DC_RESTORATION_ROOT` when running elsewhere. See [configuration](docs/configuration.md).
+The full network and demand-profile arrays, scenario records, archived repair orders, and chronological samples are external inputs. The selected checkpoint is additionally required for support-responsive replay. **A complete public input-bundle download is not currently available.**
 
-Input preparation is an explicit stage:
+The [input contract and execution guide](docs/reproduction.md) specifies the files and schemas. If you have the original research workspace, assemble the bundle with:
 
 ```sh
-python scripts/prepare_inputs.py --stage parse_opendss_distribution
-python scripts/prepare_inputs.py --stage benchmark --config configs/testbed/benchmark.yaml
+python scripts/prepare_revision_inputs.py --workspace /path/to/original-workspace --output data/external/revision
 ```
 
-Other stages are listed by `--help`. Preparation may download or generate substantial inputs when explicitly invoked. It was not run during packaging.
-
-## Training and evaluation
-
-The following commands require the external data bundle. Each learned method uses the same final protocol; GraphBC stops after behavior cloning.
+This helper collects existing inputs; it does not download or reconstruct missing research records. Once a valid bundle is present:
 
 ```sh
-python scripts/train.py --method GraphRL-A2C
-python scripts/train.py --method GraphRL-PPO
-python scripts/train.py --method GraphBC
-python scripts/train.py --method MLP-A2C
-python scripts/train.py --method CNN-A2C
+python scripts/run_revision.py adequacy --inputs data/external/revision --output outputs/revision_adequacy
+python scripts/run_revision.py hurricane --inputs data/external/revision --output outputs/revision_hurricane
+python scripts/run_revision.py chronology --inputs data/external/revision --output outputs/revision_internal_service
+python scripts/run_revision.py economics --inputs data/external/revision --hurricane outputs/revision_hurricane --output outputs/revision_economics
 ```
 
-`--phase dataset`, `bc`, or `rl` selects an individual preparation/training phase. The `rl` phase requires its behavior-cloning checkpoint. `--case-dir`, `--output-dir`, `--config` and `--device` provide explicit overrides. Reusing an output directory reuses existing dataset caches and the copied trainer's resume logic; use a new output directory when changing inputs or protocol parameters.
+The installed `dc-revision` command is equivalent. Runs require new output directories, validate input hashes, and record configuration, code, resource, and runtime information. Execution is serial and does not resume interrupted runs. Generated outputs stay local in ignored directories.
 
-```sh
-python scripts/evaluate.py --method Greedy "Random Top-K"
-python scripts/evaluate.py --method GraphRL-A2C --checkpoint-root outputs/training
-python scripts/evaluate.py --method GraphRL-PPO GraphBC MLP-A2C CNN-A2C
-python scripts/evaluate.py --method GraphRL-A2C --resource E12 --output-dir outputs/evaluation_e12
-python scripts/evaluate.py --method GraphRL-A2C --resource E24 --output-dir outputs/evaluation_e24
-```
+## Model configuration
 
-Provide a locked manifest with `--manifest` and, for a separate damage bank, `--damage-components`. Resource comparisons support the paper's Greedy and GraphRL-A2C policies. Use distinct output folders to retain separate method/resource runs. Historical-nonzero and intensity-scaled stress subsets remain distinct. Evaluation reads trained checkpoints only when a learned method is requested.
+The reference portfolio contains three sites, each with 20 MW IT demand, 26 MW operating demand, and a 30 MW design basis. Each has 13 generators rated at 2.725 MW, a 5 MW export connection, 1,440 MWh of electrical-equivalent fuel capacity, and an IT-only UPS. Export requires full internal utility service and reserves generation headroom for internal demand plus one contingency unit. The reference retained fuel floor is 44 design-load hours.
 
-```sh
-python scripts/run_bounded_ga.py --config configs/evaluation/bounded_ga.yaml
-python scripts/prepare_analysis_tables.py --resource-dir outputs/evaluation_r0 --resource-dir outputs/evaluation_r1 --resource-dir outputs/evaluation_e12 --resource-dir outputs/evaluation_e24 --output-dir outputs/analysis
-python scripts/run_benefit_cost.py --config configs/economics/benefit_cost.yaml
-python scripts/generate_figures.py --figure benefit-cost-a
-python scripts/generate_figures.py --figure benefit-cost-b
-```
+These are study inputs, not site-specific deployment recommendations. Resource parameters and citations are documented in [parameter sources](docs/revision_sources.md), with modeling boundaries in [model scope](docs/model_scope.md). The current site-level controller is distinct from the earlier pooled E12/E24 support model.
 
-Create all four resource runs before post-processing; the complete evaluation and analysis command sequence is in [reproduction](docs/reproduction.md).
+## Repository guide
 
-Bounded GA requires its locked cohort and damage table and retains the reported population and generation budgets. Benefit-cost calculations require paired resource results and external source-accounting ledgers. The lifecycle export-enablement assessment includes event climate damage; the host-community incidence assessment excludes climate from its primary denominator and reports it separately. Every benefit-cost YAML key is validated and used. Figure generation requires the final plot-ready table schemas and a method palette, described in [reproduction](docs/reproduction.md); it does not train or evaluate policies. Every script supports `--help`.
-
-## Repository structure
-
-The original introductory spatial map combines EPRI's medium-scenario 2030-minus-2024
-state electricity-use growth with FEMA historical hurricane frequency and Census
-boundaries. Install the optional mapping dependencies with `python -m pip install -e ".[mapping]"`.
-The explicit commands `dc-fetch-intro-map-sources`, `dc-prepare-intro-map`, and
-`dc-generate-intro-map` fetch, prepare, and draw the version-3 map. See the
-[map reproduction guide](docs/intro_map_reproduction.md) for offline cache use,
-configuration, sources, output formats, and interpretation. No map datasets or
-generated figures are bundled.
-
-| Path | Purpose |
+| Location | Contents |
 |---|---|
-| `src/dc_restoration/` | Testbed, hazards, restoration, anchors, policies, evaluation, economics and plotting libraries |
-| `configs/` | Final protocol and source-based accounting parameters |
-| `scripts/` | Stable command interfaces |
-| `tests/fixtures/tiny_case/` | Invented deterministic software fixture |
-| `docs/` | Architecture, methods, scope, configuration and reproduction guidance |
-| `docs/provenance/source_file_manifest.csv` | Source and destination hashes and extraction notes |
-| `data/README.md` | External input contracts and redistribution boundary |
+| `src/dc_restoration/revision/` | Current assessment implementations and resource configurations |
+| `scripts/run_revision.py` | Assessment command-line entry point |
+| `configs/` | Economic assumptions and supporting policy/testbed settings |
+| `tests/` | Synthetic software checks and the invented small network fixture |
+| `docs/` | Methods, input contracts, source lineage, and validation scope |
 
-Generated inputs, results, weights, figures, logs and local environments are ignored. See [architecture](docs/architecture.md) for the dependency flow and [packaging validation](docs/provenance/packaging_validation.md) for the checks actually performed.
+- [Current methods](docs/methods.md), [workflow instructions](docs/reproduction.md), and [software validation](docs/revision_validation.md)
+- [Earlier RL methods](docs/legacy_methods.md) and [supporting reproduction guide](docs/legacy_reproduction.md)
+- [Source provenance](docs/provenance/revision_source_manifest.json) and [introductory map workflow](docs/intro_map_reproduction.md)
+- [Contribution and release-content rules](CONTRIBUTING.md)
 
-## Citation, license and contact
+Earlier policy benchmarks and fiscal workflows remain available as legacy methods. The Python package and import names are retained for compatibility.
 
-[CITATION.cff](CITATION.cff) contains the software title and available metadata. The software authors are Kamiar Khayambashi and Negin Alemazkoor, both affiliated with the University of Virginia. No DOI, repository URL, release date, journal citation or ORCID has been assigned here.
+## Citation and license
 
-The software license is [MIT](LICENSE), as selected for this release. Confirmation of copyright ownership and the copyright notice year is the only release blocker. Authorship does not establish copyright ownership. The software license does not grant rights to external datasets or third-party dependencies. Once a repository URL is established, use its issue tracker for software questions; maintainer contact details will be added at release.
+[CITATION.cff](CITATION.cff) provides the software title and authors without asserting journal acceptance or a DOI. Code is distributed under the [MIT License](LICENSE); external datasets retain their own terms.

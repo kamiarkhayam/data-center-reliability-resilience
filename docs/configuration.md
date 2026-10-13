@@ -1,3 +1,5 @@
+> This record describes the earlier release. For the revised application study, see [current reproduction](reproduction.md) and [revision validation](revision_validation.md).
+
 # Configuration
 
 Run commands from the repository root or pass `--root`. `DC_RESTORATION_ROOT` provides the same override. All public commands resolve relative paths from that root. No original workspace path is required. Use absolute CLI paths when inputs live elsewhere.

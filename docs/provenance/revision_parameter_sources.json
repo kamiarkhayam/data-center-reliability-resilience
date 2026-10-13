@@ -1,0 +1,145 @@
+{
+  "archetype_v1": {
+    "source": "research/reliability_pilot_v1/sources.json",
+    "sha256": "d6f795ff5551619cd680351709dbb647df77589ca1ea0f3b047f6677b3c95277",
+    "entries": {
+      "ieee_rts": {
+        "title": "The IEEE Reliability Test System-1996",
+        "doi": "10.1109/59.780914",
+        "url": "https://doi.org/10.1109/59.780914",
+        "accessible_copy": "https://keprofesianhmeitb.wordpress.com/wp-content/uploads/2009/04/the-ieee-reliability-test-system.pdf",
+        "location": "Tables 1, 6 and 7; inherited one-area fleet",
+        "use": "Unit capacities, multiplicities, outage/repair parameters; not a calibrated local supply system. Forced-outage-only adaptation excludes maintenance, hydro seasonal/energy constraints, dispatch and network constraints."
+      },
+      "adequacy_method": {
+        "title": "Ibanez and Milligan (2014), Comparing Resource Adequacy Metrics",
+        "url": "https://docs.nlr.gov/docs/fy14osti/62847.pdf",
+        "use": "Capacity availability, unserved energy and loss-of-load hours; hourly LOLH is not daily LOLE."
+      },
+      "smart_ds": {
+        "url": "https://www.nlr.gov/grid/smart-ds",
+        "use": "Local P49U OpenDSS yearly per-unit multipliers are joined to final community loads; replicas preserve source chronology."
+      },
+      "stack": {
+        "title": "STACK Backup Generating Facility SPPE application, 2021",
+        "url": "https://efiling.energy.ca.gov/GetDocument.aspx?DocumentContentId=74746&tn=240910",
+        "location": "Section 2.2.4",
+        "use": "60 MW IT, 78 MW average-condition facility demand, 90 MW worst-case design demand; PUE 1.3/1.5 are project design inputs, not a measured load trace."
+      },
+      "laurelwood": {
+        "title": "CEC Laurelwood initial study, 19-SPPE-01",
+        "url": "https://efiling.energy.ca.gov/GetDocument.aspx?DocumentContentId=61007&tn=229584",
+        "use": "3 MW maximum / 2.725 MW continuous generator examples and at least 48-hour source fuel endurance. Pilot uses an explicitly simplified electrical-energy budget, not a verified fuel curve or export permit."
+      },
+      "backup_reliability": {
+        "title": "Marqusee and Stringer (2023), Distributed Energy Resource Reliability for Backup Electric Power Systems",
+        "url": "https://docs.nlr.gov/docs/fy23osti/83132.pdf",
+        "location": "Table 3 and Appendix A",
+        "use": "Well-maintained packaged diesel below 4 MW: initial availability 0.995; start failure 0.0094; running MTTF 1100 hours. Appendix A Table A-2 gives PREP mean repair time 37.3 hours; using it for all pilot corrective failures is an explicit adaptation."
+      },
+      "laurelwood_refueling": {
+        "title": "Laurelwood Data Center responses to CEC data requests, 2019",
+        "url": "https://efiling.energy.ca.gov/GetDocument.aspx?DocumentContentId=58875&tn=227626",
+        "location": "Response to request 5, page 4",
+        "use": "Applicant proposed contracts with multiple suppliers for delivery within 48 hours of a request. Pilot assumes successful ordinary-operation replenishment after 48 hours, orders at 50% budget remaining, and tests no-resupply separately. Neither trigger nor guaranteed disaster delivery comes from the source."
+      },
+      "pjm_response": {
+        "title": "PJM Adds Emergency Procedures to Maintain Reliability, June 24, 2026",
+        "url": "https://insidelines.pjm.com/pjm-adds-emergency-procedures-to-maintain-reliability/",
+        "use": "15-minute instructed transfer scenario, not intrinsic generator startup delay."
+      },
+      "pjm_shedding": {
+        "url": "https://www.pjm.com/-/media/DotCom/documents/manuals/m13.pdf",
+        "location": "Revision 98, Section 2, pages 47-48",
+        "use": "Critical-load recognition; does not prescribe this pilot's divisible, proportional noncritical-service allocation."
+      }
+    }
+  },
+  "archetype_v5": {
+    "source": "research/reliability_pilot_v5/sources.json",
+    "sha256": "e559e246a474692594f86b4e7ebab3880cfedc39eb6dfa3d0043867b321151c7",
+    "entries": {
+      "inherited_facility": {
+        "source": "../reliability_pilot_v1/sources.json",
+        "use": "Three 20 MW IT sites, PUE 1.3 nominal / 1.5 design, 2.725 MW continuous units, N+1 sizing, 48-hour design-demand electrical-equivalent fuel capacity. Existing synthetic archetype, not a single calibrated real facility."
+      },
+      "ups_and_startup": {
+        "title": "Laurelwood Data Center responses to CEC data requests, 2019",
+        "url": "https://efiling.energy.ca.gov/GetDocument.aspx?DocumentContentId=58875&tn=227626",
+        "location": "Response 2(c)-(h), page 3",
+        "source_values": "UPS supports 100% of server-bay demand for up to 10 minutes; major mechanical equipment is not UPS supplied. Start typically occurs within 90 seconds of a loss alarm; load acceptance is within 90 seconds of a UPS start request. UPS recharges only from utility service, not generators.",
+        "adaptation": "Use a fully available 10-minute, 20 MW IT-only delivered-energy bridge per synthetic site. Conservatively add the two stated 90-second timing bounds to form a 180-second diagnostic readiness delay. This is not a universal measured generator start time. The UPS-unavailable diagnostic bounds missing UPS reliability data. No automatic recharge or recharge rate is invented."
+      },
+      "generator_reliability": {
+        "title": "Marqusee and Stringer (2023), Distributed Energy Resource Reliability for Backup Electric Power Systems",
+        "url": "https://docs.nlr.gov/docs/fy23osti/83132.pdf",
+        "location": "Table 3, Appendix A, Figures A-2/A-3 and Table A-2",
+        "values": "Initial availability 0.995, failure to start 0.0094, running MTTF 1100 h; inherited corrective-repair mean 37.3 h.",
+        "adaptation": "Independent packaged-generator paths conditional on a continuous emergency call are shared across policies. Readiness/start/running failures and repair are included. Load-dependent failure, common-cause damage, fuel-dependent commitment and storm repair-access models are not inferred. Availability paths after fuel exhaustion do not provide energy."
+      },
+      "export_response": {
+        "url": "https://insidelines.pjm.com/pjm-adds-emergency-procedures-to-maintain-reliability/",
+        "use": "The inherited 15-minute instructed grid-response timing is a separate synthetic export-authorization delay, not automatic facility generator startup. It is not an export permit or utility interconnection approval."
+      },
+      "reserve_rule": {
+        "source": "Explicit pilot operating assumption, not an external standard",
+        "use": "Protect fuel for 48 hours of internal generation at the 30 MW/site design-demand bound, counted from the declared generator readiness time. Export may use only fuel in excess of the remaining obligation, and one unit of available power is retained as contingency headroom. Protection expires at the declared deadline; it is not a guarantee of full no-export endurance or IT application uptime."
+      },
+      "fuel_accounting": {
+        "source": "Inherited electrical-equivalent budget; explicit component-model boundary",
+        "use": "A common 1440 MWh-equivalent tank per site pays for internal generation plus export. No resupply in the diagnostic episodes. Optional deliveries must be explicit and bounded by storage; no fuel curve, storage permitting or efficiency-by-loading claim is made."
+      }
+    }
+  },
+  "archetype_v8": {
+    "source": "research/reliability_pilot_v8/sources.json",
+    "sha256": "96d2a8313927695c6b5e7c3cc5cbba5e15d64ac6326849d9189e60ada0611b03",
+    "entries": {
+      "accessed": "2026-09-13",
+      "sources": [
+        {
+          "id": "eaton_vrla_recharge",
+          "title": "Lithium-ion UPS FAQ: comparison with VRLA recharge",
+          "url": "https://www.eaton.com/us/en-us/products/backup-power-ups-surge-it-power-distribution/backup-power-ups/lithium-ion-batteries-/lithium-ion-ups-faq.html",
+          "locator": "Are there different recharge rates between lithium-ion and VRLA batteries?",
+          "supported_input": "VRLA rule of thumb: ten times discharge duration to recover 90% capacity.",
+          "pilot_adaptation": "Constant effective recharge from empty to 90% of 3.333333 MWh in 100 minutes, giving 1.8 MW per site. The half-rate and zero-rate checks are analyst sensitivities. No final 10% charging tail is credited; this is not a complete manufacturer charging curve."
+        },
+        {
+          "id": "laurelwood_data_response",
+          "title": "Laurelwood Data Center, Data Responses, Docket 19-SPPE-01, TN 227626",
+          "url": "https://efiling.energy.ca.gov/GetDocument.aspx?DocumentContentId=58875&tn=227626",
+          "locator": "Page 3, responses 2(c)-(g)",
+          "supported_input": "Ten-minute UPS at full server load; major mechanical loads excluded. Automatic generator response after utility loss and utility-only UPS recharge.",
+          "pilot_adaptation": "Retain the prior conservative three-minute ready delay obtained by adding the two reported 90-second allowances. They may overlap in real operation; this is not a universal measured three-minute start time."
+        },
+        {
+          "id": "laurelwood_modular_protection",
+          "title": "Laurelwood Data Center Final Commission Decision, TN 232394",
+          "url": "https://efiling.energy.ca.gov/GetDocument.aspx?DocumentContentId=64398&tn=232394",
+          "locator": "Initial Study, project description, printed page 4-9",
+          "supported_input": "Independent UPS modules and critical buses with dedicated standby generation and automatic transfer control.",
+          "pilot_adaptation": "Motivates distinguishing interrupted and uninterrupted internal load blocks. The continuous proportional block allocation and pooled site resources are synthetic adequacy approximations, not a reproduction of the source site's electrical topology."
+        },
+        {
+          "id": "pjm_coordinated_response",
+          "title": "PJM Adds Emergency Procedures to Maintain Reliability, June 24, 2026",
+          "url": "https://insidelines.pjm.com/pjm-adds-emergency-procedures-to-maintain-reliability/",
+          "locator": "Emergency Use of Backup Generators",
+          "supported_input": "Large loads prepare to move to backup within 15 minutes of an emergency action, with coordination and applicable authorization.",
+          "pilot_adaptation": "An additional instructed case transfers after 15 minutes of modeled scarcity, without perfect-foresight dispatch. This is not intrinsic generator startup, a universal operating permission, or a simulated PJM emergency sequence."
+        }
+      ],
+      "explicit_model_assumptions": [
+        "In the private baseline, critical-community-first proportional rationing is unchanged; assigned DC shortfall maps to disjoint interrupted internal blocks with the same IT/auxiliary proportions as site demand.",
+        "Automatic backup serves the interrupted blocks only. Uninterrupted blocks continue importing; there is no automatic whole-site trip or ordinary community export.",
+        "Site generation and UPS energy are pooled aggregate resources; internal switch topology, voltage triggers and block-specific battery inventories are not resolved.",
+        "Recharge uses electrical-energy-equivalent accounting with no separate AC conversion-loss or part-load model. It is interruptible after community/internal service and limited by the original 30 MW/site design envelope.",
+        "A constant 30 MW/site design stress case has no charging headroom; this is reported rather than increasing the locked capacity plan.",
+        "Initial UPS inventory is full. Subsequent recharge is credited only up to 90%, without discarding energy already above that level.",
+        "No auxiliary-deficit-to-IT thermal shutdown model is added, and zero electrical IT ENS is not an application-availability guarantee.",
+        "Prior fuel, equipment failure, refueling and capacity planning assumptions are retained. Annual samples are independent equipment/supply realizations on one repeated community profile, not multiple weather years."
+      ]
+    }
+  }
+}

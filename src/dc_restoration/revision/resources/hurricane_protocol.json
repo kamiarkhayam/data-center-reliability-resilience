@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "seed": 20260914,
+  "equipment_namespace": 91,
+  "equipment_replicates": 32,
+  "demand_cases": [
+    "nominal",
+    "design"
+  ],
+  "reserve_hours": [
+    0,
+    12,
+    24,
+    36,
+    44,
+    46,
+    48
+  ],
+  "path_disabled_sites": [
+    0,
+    1,
+    2
+  ],
+  "path_check_reserve_hours": 0,
+  "adaptive_equipment_replicate": 0,
+  "adaptive_reserve_hours": 0,
+  "bootstrap_replicates": 4000,
+  "bootstrap_seed": 2026091491,
+  "equipment_prefixes": [
+    8,
+    16,
+    32
+  ],
+  "equipment_mc_relative_halfwidth": 0.05,
+  "equipment_mc_absolute_halfwidth_mwh": 0.1,
+  "equipment_model": "continuous_emergency_call_stress",
+  "community_load_basis": "unchanged_static_benchmark_load_blocks",
+  "connectivity_rule": "inherited_bundled_link_all_records_available",
+  "initial_fuel_fraction": 1.0,
+  "initial_ups_fraction": 1.0,
+  "hurricane_refueling": false,
+  "hurricane_ups_recharge": false,
+  "new_upstream_damage": false,
+  "annual_event_frequency": null
+}
